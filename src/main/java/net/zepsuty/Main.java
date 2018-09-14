@@ -1,6 +1,7 @@
 package net.zepsuty;
 
 import javax.swing.*;
+import java.io.File;
 
 public class Main
 {
@@ -23,6 +24,8 @@ public class Main
         
         JButton btnExit = new JButton("Exit");
         JButton btnConvert = new JButton("Convert");
+        JButton btnOpenSourceFile = new JButton("Open PDF from file...");
+        JButton btnSaveDetinationFile = new JButton("Save TXT file as...");
         
         JLabel sourceFileLabel = new JLabel("PDF to convert:");
         JLabel destinationFileLabel = new JLabel("File to save:");
@@ -36,13 +39,43 @@ public class Main
         panel.add(titleLab);
         panel.add(sourceFileLabel);
         panel.add(sourceFileTextFild);
+        panel.add(btnOpenSourceFile);
         panel.add(destinationFileLabel);
         panel.add(destinationFileTextFiled);
+        panel.add(btnSaveDetinationFile);
         panel.add(btnConvert);
         panel.add(btnExit);
         
+        btnOpenSourceFile.addActionListener(e -> {
+            
+            final JFileChooser fc = new JFileChooser();
+            int returnVal = fc.showDialog(null,"Open PDF file");
+        
+            if(returnVal == JFileChooser.APPROVE_OPTION){
+                
+                File file = fc.getSelectedFile();
+                sourceFileTextFild.setText(file.getPath());
+                
+            }
+        
+        });
+        
+        btnSaveDetinationFile.addActionListener(e -> {
+    
+            final JFileChooser fc = new JFileChooser();
+            int returnVal = fc.showDialog(null,"Save file as TXT");
+    
+            if(returnVal == JFileChooser.APPROVE_OPTION){
+        
+                File file = fc.getSelectedFile();
+                destinationFileTextFiled.setText(file.getPath());
+        
+            }
+            
+        });
+        
         btnConvert.addActionListener(e ->
-                                         System.exit(1)
+                                         JOptionPane.showMessageDialog(null, "Conversion finished.")
                                     );
         
         btnExit.addActionListener(e ->
