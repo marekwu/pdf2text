@@ -1,7 +1,13 @@
 package net.zepsuty;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
 import javax.swing.*;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Main
 {
@@ -31,10 +37,10 @@ public class Main
         JLabel destinationFileLabel = new JLabel("File to save:");
         
         JTextField sourceFileTextFild = new JTextField();
-        sourceFileTextFild.setColumns(40);
+        sourceFileTextFild.setColumns(50);
         
         JTextField destinationFileTextFiled = new JTextField();
-        destinationFileTextFiled.setColumns(40);
+        destinationFileTextFiled.setColumns(50);
         
         panel.add(titleLab);
         panel.add(sourceFileLabel);
@@ -49,33 +55,52 @@ public class Main
         btnOpenSourceFile.addActionListener(e -> {
             
             final JFileChooser fc = new JFileChooser();
-            int returnVal = fc.showDialog(null,"Open PDF file");
-        
-            if(returnVal == JFileChooser.APPROVE_OPTION){
+            int returnVal = fc.showDialog(null, "Open PDF file");
+            
+            if(returnVal == JFileChooser.APPROVE_OPTION)
+            {
                 
                 File file = fc.getSelectedFile();
                 sourceFileTextFild.setText(file.getPath());
                 
             }
-        
+            
         });
         
         btnSaveDetinationFile.addActionListener(e -> {
-    
+            
             final JFileChooser fc = new JFileChooser();
-            int returnVal = fc.showDialog(null,"Save file as TXT");
-    
-            if(returnVal == JFileChooser.APPROVE_OPTION){
-        
+            int returnVal = fc.showDialog(null, "Save file as TXT");
+            
+            if(returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                
                 File file = fc.getSelectedFile();
                 destinationFileTextFiled.setText(file.getPath());
-        
+                
             }
             
         });
         
-        btnConvert.addActionListener(e ->
-                                         JOptionPane.showMessageDialog(null, "Conversion finished.")
+        btnConvert.addActionListener(e -> {
+    
+                                         try
+                                         {
+                                             PDDocument pdDocument =  PDDocument.load(new File( sourceFileTextFild.getText()));
+                                             String extractedText = new PDFTextStripper().getText(pdDocument);
+    
+                                             PrintWriter pw = new PrintWriter(new FileWriter(destinationFileTextFiled.getText()));
+                                             pw.write(extractedText);
+                                             pw.close();
+                                         }
+                                         catch(IOException e1)
+                                         {
+                                             JOptionPane.showMessageDialog(null, e1);
+                                         }
+    
+                                         
+                                         JOptionPane.showMessageDialog(null, "Conversion finished.");
+                                     }
                                     );
         
         btnExit.addActionListener(e ->
