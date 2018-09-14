@@ -83,12 +83,12 @@ public class Main
         });
         
         btnConvert.addActionListener(e -> {
-    
+            
                                          try
                                          {
-                                             PDDocument pdDocument =  PDDocument.load(new File( sourceFileTextFild.getText()));
+                                             PDDocument pdDocument = PDDocument.load(new File(sourceFileTextFild.getText()));
                                              String extractedText = new PDFTextStripper().getText(pdDocument);
-    
+                
                                              PrintWriter pw = new PrintWriter(new FileWriter(destinationFileTextFiled.getText()));
                                              pw.write(extractedText);
                                              pw.close();
@@ -97,8 +97,7 @@ public class Main
                                          {
                                              JOptionPane.showMessageDialog(null, e1);
                                          }
-    
-                                         
+            
                                          JOptionPane.showMessageDialog(null, "Conversion finished.");
                                      }
                                     );
