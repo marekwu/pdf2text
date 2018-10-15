@@ -81,7 +81,7 @@ public class MainController
     }
     
     @FXML
-    private void handleBtnOpenSourceFile(ActionEvent actionEvent)
+    private void handleOpenSourceFile(ActionEvent actionEvent)
     {
         
         final JFileChooser fc = new JFileChooser();
@@ -99,7 +99,7 @@ public class MainController
     }
     
     @FXML
-    private void handleBtnOpenDestinationFile(ActionEvent actionEvent)
+    private void handleOpenDestinationFile(ActionEvent actionEvent)
     {
         
         final JFileChooser fc = new JFileChooser();

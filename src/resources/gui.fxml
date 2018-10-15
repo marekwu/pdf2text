@@ -19,16 +19,23 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="mnuOpenSourceFile" mnemonicParsing="false" onAction="#handleMnuOpenSourceFile" text="Choose source file (PDF)...">
+                        <MenuItem fx:id="mnuOpenSourceFile" mnemonicParsing="false" onAction="#handleOpenSourceFile" text="Choose source file (PDF)...">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="mnuSaveDestinationFile" mnemonicParsing="false" onAction="#handleMnuSaveDestinationFile" text="Choose destination file (TXT)...">
+                        <MenuItem fx:id="mnuSaveDestinationFile" mnemonicParsing="false" onAction="#handleOpenDestinationFile" text="Choose destination file (TXT)...">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                             </accelerator>
                         </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem fx:id="mnuConvert" mnemonicParsing="false" onAction="#handleBtnConvertFile" text="Convert file">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+
                         <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem fx:id="mnuExit" mnemonicParsing="false" onAction="#handleExit" text="Exit">
                             <accelerator>
@@ -57,7 +64,7 @@
                         <Tooltip text="Specify your source PDF file."/>
                     </tooltip>
                 </TextField>
-                <Button fx:id="btnOpenSourceFile" layoutX="539.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleBtnOpenSourceFile" prefHeight="26.0" prefWidth="80.0" text="Open...">
+                <Button fx:id="btnOpenSourceFile" layoutX="539.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleOpenSourceFile" prefHeight="26.0" prefWidth="80.0" text="Open...">
                     <tooltip>
                         <Tooltip text="Click to open your source PDF file."/>
                     </tooltip>
@@ -71,7 +78,7 @@
                         layoutX="539.0"
                         layoutY="109.0"
                         mnemonicParsing="false"
-                        onAction="#handleBtnOpenDestinationFile"
+                        onAction="#handleOpenDestinationFile"
                         prefHeight="26.0"
                         prefWidth="80.0"
                         text="Save...">
@@ -91,7 +98,7 @@
                 </Button>
                 <ToolBar layoutY="331.0" prefHeight="40.0" prefWidth="640.0">
                     <items>
-                        <Label prefHeight="16.0" prefWidth="620.0" text="labStatus"/>
+                        <Label prefHeight="16.0" prefWidth="620.0" text=""/>
                     </items>
                 </ToolBar>
             </children>
