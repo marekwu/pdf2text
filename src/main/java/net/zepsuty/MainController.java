@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.*;
+import javafx.stage.Stage;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.io.RandomAccessRead;
 import org.apache.pdfbox.pdfparser.PDFParser;
@@ -58,16 +61,6 @@ public class MainController
     Label labStatus;
     
     @FXML
-    private void handleMnuOpenSourceFile(ActionEvent actionEvent)
-    {
-    }
-    
-    @FXML
-    private void handleMnuSaveDestinationFile(ActionEvent actionEvent)
-    {
-    }
-    
-    @FXML
     private void handleExit(ActionEvent actionEvent)
     {
         
@@ -78,22 +71,26 @@ public class MainController
     @FXML
     private void handleMnuAbout(ActionEvent actionEvent)
     {
+        
+        labStatus.setText("Created by Marek Witkowski.");
+        
     }
     
     @FXML
     private void handleOpenSourceFile(ActionEvent actionEvent)
     {
         
-        final JFileChooser fc = new JFileChooser();
-        fc.addChoosableFileFilter(new FileNameExtensionFilter("PDF files", "pdf"));
-        int returnVal = fc.showDialog(null, "Open PDF file");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Source File");
+        fileChooser.getExtensionFilters().addAll(
+            new ExtensionFilter("PDF Files", "*.pdf"),
+            new ExtensionFilter("All Files", "*.*")
+                                                );
         
-        if(returnVal == JFileChooser.APPROVE_OPTION)
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if(selectedFile != null)
         {
-            
-            File file = fc.getSelectedFile();
-            txtSourceFile.setText(file.getPath());
-            
+            txtSourceFile.setText(selectedFile.getPath());
         }
         
     }
@@ -102,17 +99,19 @@ public class MainController
     private void handleOpenDestinationFile(ActionEvent actionEvent)
     {
         
-        final JFileChooser fc = new JFileChooser();
-        fc.addChoosableFileFilter(new FileNameExtensionFilter("TXT files", "txt"));
-        int returnVal = fc.showDialog(null, "Save file as TXT");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Destination File");
+        fileChooser.getExtensionFilters().addAll(
+            new ExtensionFilter("Text Files", "*.txt"),
+            new ExtensionFilter("All Files", "*.*")
+                                                );
         
-        if(returnVal == JFileChooser.APPROVE_OPTION)
+        File selectedFile = fileChooser.showSaveDialog(null);
+        if(selectedFile != null)
         {
-            
-            File file = fc.getSelectedFile();
-            txtDestinationFile.setText(file.getPath());
-            
+            txtDestinationFile.setText(selectedFile.getPath());
         }
+        
     }
     
     @FXML
