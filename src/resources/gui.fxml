@@ -98,7 +98,7 @@
                 </Button>
                 <ToolBar layoutY="331.0" prefHeight="40.0" prefWidth="640.0">
                     <items>
-                        <Label prefHeight="16.0" prefWidth="620.0" text=""/>
+                        <Label fx:id="labStatus" prefHeight="16.0" prefWidth="620.0" text=""/>
                     </items>
                 </ToolBar>
             </children>
