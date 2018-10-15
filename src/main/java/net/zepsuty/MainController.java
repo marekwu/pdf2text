@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.*;
 import javafx.stage.Stage;
 import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.io.RandomAccessRead;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -19,10 +20,10 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 
 public class MainController
 {
@@ -118,35 +119,36 @@ public class MainController
     private void handleBtnConvertFile(ActionEvent actionEvent)
     {
         
-        labStatus.setText(convertDoc(txtSourceFile.getText(), txtDestinationFile.getText()));
-        
-    }
-    
-    private static String convertDoc(String sourceFile, String descFile)
-    {
-        
         try
         {
-            File file = new File(sourceFile);
-            String extractedText;
-            PDFParser parser = new PDFParser((RandomAccessRead) new RandomAccessFile(file, "r"));
-            parser.parse();
             
-            COSDocument cosDoc = parser.getDocument();
-            PDFTextStripper pdfStripper = new PDFTextStripper();
-            PDDocument pdDoc = new PDDocument(cosDoc);
-            extractedText = pdfStripper.getText(pdDoc);
-            
-            PrintWriter pw = new PrintWriter(new FileWriter(descFile));
-            pw.write(extractedText);
-            pw.close();
-            
-            return "Conversion finished.";
+            convertDoc(txtSourceFile.getText(), txtDestinationFile.getText());
+            labStatus.setText("Conversion finished.");
         }
         catch(IOException e1)
         {
-            return "error: " + e1.getMessage();
+            labStatus.setText("Error:".concat(e1.getMessage()));
         }
+    }
+    
+    private static void convertDoc(String sourceFile, String descFile) throws IOException
+    {
+        
+        String extractedText;
+        
+        File file = new File(sourceFile);
+        PDFParser parser = new PDFParser(new RandomAccessFile(file,"r"));
+        
+        parser.parse();
+        
+        COSDocument cosDoc = parser.getDocument();
+        PDFTextStripper pdfStripper = new PDFTextStripper();
+        PDDocument pdDoc = new PDDocument(cosDoc);
+        extractedText = pdfStripper.getText(pdDoc);
+        
+        PrintWriter pw = new PrintWriter(new FileWriter(descFile));
+        pw.write(extractedText);
+        pw.close();
         
     }
     
